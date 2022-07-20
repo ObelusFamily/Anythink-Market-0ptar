@@ -170,6 +170,14 @@ router.get("/:item", auth.optional, function(req, res, next) {
     .catch(next);
 });
 
+//return list of items
+router.get('/:item', function(req, res, next) {
+  Item.find().distinct('titleList').then(function(item){
+    return res.json({ item: item});
+  }).catch(next);
+});
+
+
 // update item
 router.put("/:item", auth.required, function(req, res, next) {
   User.findById(req.payload.id).then(function(user) {
